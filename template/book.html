@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %} Book {% endblock %}
+
+{%block content%}
+
+<!-- Section Book Starts -->
+<section class="book" id="book" style="margin-top: 50px;">
+  <div class="container">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show " role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    <div class="main-text">
+      <h1><span>B</span>ook</h1>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6 py-3 py-md-0">
+        <div class="card">
+          <img src="../media/book-img.png" alt="">
+        </div>
+      </div>
+
+      <div class="col-md-6 py-3 py-md-0">
+        <form action="/book/" id="myForm" method="post">
+          {% csrf_token %}
+          <input type="text" name="from" class="form-control" placeholder="From" required><br>
+          <input type="text" name="destination" class="form-control" placeholder="Destination" required><br>
+          <input type="text" name="num" class="form-control" placeholder="Number Of Passenger" required><br>
+          <h6 class="mt-4"><strong>Departure Date</strong></h6>
+          <input type="date" name="departure" class="form-control" placeholder="Departure" required><br>
+          <h6 class="mt-4"><strong>Arrival Date</strong></h6>
+          <input type="date" name="arrival" class="form-control" placeholder="Arrival" required><br>
+
+          <input type="submit" value="Review and Book" class="submit" required>
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Add event listener to radio buttons
+  let myForm = document.getElementById('myForm');
+  let qValue = location.search.split('=');
+  if (qValue.length > 1) {
+    myForm.destination.value = qValue[1];
+  }
+  const genderRadios = document.querySelectorAll('.genderRadio');
+  const genderDropdown = document.getElementById('genderDropdown');
+
+  genderRadios.forEach(radio => {
+    radio.addEventListener('change', function () {
+      // Update dropdown button text with selected gender
+      genderDropdown.innerText = this.value.charAt(0).toUpperCase() + this.value.slice(1);
+      $('.dropdown-toggle').dropdown('toggle');
+    });
+  });
+</script>
+<!-- Section Book Ends -->
+
+
+
+{%endblock%}
